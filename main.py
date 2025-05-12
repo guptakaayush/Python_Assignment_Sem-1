@@ -73,19 +73,19 @@ def roles(): #Function which ask user, their role of getting access.
                      3.Chef
                      4.customer\n''')) #Taking 1 for administator, 2 for manager, 3 for chef, 4 for customer.
     if role_no == 1:
-        role_checker(role_no, file_name="Administrator.txt")
+        role_checker(role_no, file_name="Username and Password/Administrator.txt")
     elif role_no == 2:
-        role_checker(role_no, file_name="manager.txt")
+        role_checker(role_no, file_name="Username and Password/manager.txt")
     elif role_no == 3:
-        role_checker(role_no, file_name="chef.txt")
+        role_checker(role_no, file_name="Username and Password/chef.txt")
     elif role_no == 4:
         cos_login = int(input("Enter 1 for login and 2 for register:"))
         while True: #to let ask user value again and again if they do not enter value 1-2
             if cos_login == 1:
-                role_checker(role_no, file_name="customer.txt")
+                role_checker(role_no, file_name="Username and Password/customer.txt")
                 break
             elif cos_login == 2:
-                customer_register(role_no, file_name="customer.txt")
+                customer_register(role_no, file_name="Username and Password/customer.txt")
                 break
             else:
                 print("Invalid Number!")
