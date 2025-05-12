@@ -1,21 +1,22 @@
-from main import login, roles
+from main import login
 print("\nWelcome! to Administrator panel")
 print("")
+
 #---------------------------------------------------------------------------------------------------------------------------
 
-def add_manager():
+def add_role(file_location, file_name):
     username, password = login()
-    with open("manager.txt", "a") as manag_a: #open administrator.txt and add user to it.
-        cos_dict = {"username": username, "password": password}
-        for key, value in cos_dict.items():
-            manag_a.write(f"\n{key}:{value}")
-        print("\nUser successfully added!\n\n")
+    with open(file_location, "a") as file_a: #open administrator.txt and add user to it.
+        dict = {"username": username, "password": password}
+        for key, value in dict.items():
+            file_a.write(f"\n{key}:{value}")
+        print(f"\nNew {file_name} successfully added!\n\n")
     what_you_want()
 
-def edit_manager():
+def edit_role(file_location, file_name):
     username, password = login()
-    with open("manager.txt", "r") as manag_e_r:
-        lines = manag_e_r.readlines()
+    with open(file_location, "r") as file_e_r:
+        lines = file_e_r.readlines()
     updated_lines = []
     found = False
     skip_next = False
@@ -34,18 +35,18 @@ def edit_manager():
         else:
             updated_lines.append(lines[i])  
     if found:
-        with open("manager.txt", "w") as manag_d_w:
-            manag_d_w.writelines(updated_lines) # Rewrite the whole text and remove matched username and password
-            print("\nManager updated successfully.")
+        with open(file_location, "w") as file_d_w:
+            file_d_w.writelines(updated_lines) # Rewrite the whole text and remove matched username and password
+            print(f"\n{file_name} updated successfully.")
         what_you_want()
     else:
-        print("\nNo matching manager account found.\n")
+        print(f"\nNo matching {file_name} account found.\n")
         what_you_want()
-    
-def delete_manager():
+
+def delete_role(file_location, file_name):
     username, password = login()
-    with open("manager.txt", "r") as manag_d_r:
-        lines = manag_d_r.readlines()
+    with open(file_location, "r") as file_d_r:
+        lines = file_d_r.readlines()
     update_lines = []
     found = False
     skip_next = False
@@ -59,101 +60,36 @@ def delete_manager():
             continue
         update_lines.append(lines[i]) 
     if found:
-        with open("manager.txt", "w") as manag_d_w:
-            manag_d_w.writelines(update_lines) # Rewrite the whole text and remove matched username and password
-            print("\nChef account deleted successfully.") 
+        with open(file_location, "w") as file_d_w:
+            file_d_w.writelines(update_lines) # Rewrite the whole text and remove matched username and password
+            print(f"\n{file_name} account deleted successfully.") 
         what_you_want()
     else:
-        print("\nNo matching manager account found.")
+        print(f"\nNo matching {file_name} account found.")
         what_you_want()
 
+#---------------------------------------------------------------------------------------------------------------------------
 
 def manage_manager():
     n = int(input("\nEnter '1' for add, '2' for edit, '3' for delete: "))
     if n==1:
-        add_manager()
+        add_role(file_location="Username and Password/Manager.txt", file_name="Manager")
     elif n==2:
-        edit_manager()
+        edit_role(file_location="Username and Password/Manager.txt", file_name="Manager")
     elif n==3:
-        delete_manager()
+        delete_role(file_location="Username and Password/Manager.txt", file_name="Manager")
     else:
         print("Please! Input number between 1-3.")
         manage_manager()
 
-#---------------------------------------------------------------------------------------------------------------------------
-
-def add_chef():
-    username, password = login()
-    with open("chef.txt", "a") as manag_a: #open chef.txt and add user to it.
-        cos_dict = {"username": username, "password": password}
-        for key, value in cos_dict.items():
-            manag_a.write(f"\n{key}:{value}")
-        print("\nUser successfully added!\n\n")
-    what_you_want()
-
-def edit_chef():
-    username, password = login()
-    with open("Chef.txt", "r") as chef_e_r:
-        lines = chef_e_r.readlines()
-    updated_lines = []
-    found = False
-    skip_next = False
-    for i in range(len(lines)):
-        if skip_next:
-            skip_next = False
-            continue
-        if lines[i].strip() == f"username:{username}" and lines[i + 1].strip() == f"password:{password}":
-            new_username = input("Enter new username: ")
-            new_password = input("Enter new password: ")
-            updated_lines.append(f"username:{new_username}\n")
-            updated_lines.append(f"password:{new_password}\n")
-            found = True
-            skip_next = True # Skip password Line
-            continue
-        else:
-            updated_lines.append(lines[i])  
-    if found:
-        with open("Chef.txt", "w") as chef_d_w:
-            chef_d_w.writelines(updated_lines) # Rewrite the whole text and remove matched username and password
-            print("\nChef updated successfully.")
-        what_you_want()
-    else:
-        print("\nNo matching Chef account found.\n")
-        what_you_want()
-    
-def delete_chef():
-    username, password = login()
-    with open("chef.txt", "r") as chef_d_r:
-        lines = chef_d_r.readlines()
-    update_lines = []
-    found = False
-    skip_next = False
-    for i in range(len(lines)):
-        if skip_next:
-            skip_next = False
-            continue
-        if lines[i].strip() == f"username:{username}" and lines[i + 1].strip() == f"password:{password}":
-            found = True
-            skip_next = True # Skip password Line
-            continue
-        update_lines.append(lines[i]) 
-    if found:
-        with open("chef.txt", "w") as chef_d_w:
-            chef_d_w.writelines(update_lines) # Rewrite the whole text and remove matched username and password
-            print("\nChef account deleted successfully.") 
-        what_you_want()
-    else:
-        print("\nNo matching chef account found.")
-        what_you_want()
-
 def manage_chef():
     n = int(input("\nEnter '1' for add, '2' for edit, '3' for delete: "))
     if n==1:
-        add_chef()
+        add_role(file_location="Username and Password/Chef.txt", file_name="Chef")
     elif n==2:
-        edit_chef()
+        edit_role(file_location="Username and Password/Chef.txt", file_name="Chef")
     elif n==3:
-        delete_chef()
+        delete_role(file_location="Username and Password/Chef.txt", file_name="Chef")
     else:
         print("Please! Input number between 1-3.")
         manage_chef()
@@ -181,6 +117,8 @@ def view_feedback():
     print("Successfully came to view feedback function.")
     what_you_want()
 
+#---------------------------------------------------------------------------------------------------------------------------
+
 def update_own_profile():
     username, password = login()
     with open("Administrator.txt", "w") as admin:
@@ -188,6 +126,8 @@ def update_own_profile():
         for key, value in adm_dict.items():
            admin.write(f"\n{key}:{value}")
         print("\nAdministrator User Successfully Updated!")
+
+#---------------------------------------------------------------------------------------------------------------------------
     
 def what_you_want():
     print("\nWhat You Want to Do\n")
